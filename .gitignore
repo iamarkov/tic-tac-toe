@@ -6,3 +6,4 @@
 /.idea/
 /target/
 /game-server/target/
+/game-server/.mvn/
