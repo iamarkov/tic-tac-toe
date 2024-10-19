@@ -1,4 +1,4 @@
-package com.scentbird.gameserver.payload.requests;
+package com.scentbird.server.payload.requests;
 
 import lombok.Data;
 

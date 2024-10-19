@@ -1,8 +1,8 @@
-package com.scentbird.gameserver.stomp;
+package com.scentbird.server.stomp;
 
-import com.scentbird.gameserver.payload.requests.HelloRequest;
-import com.scentbird.gameserver.payload.requests.StompRequest;
-import com.scentbird.gameserver.stomp.handlers.StompRequestHandler;
+import com.scentbird.server.payload.requests.HelloRequest;
+import com.scentbird.server.payload.requests.StompRequest;
+import com.scentbird.server.stomp.handlers.StompRequestHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;

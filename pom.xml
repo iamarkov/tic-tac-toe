@@ -27,7 +27,8 @@
     </dependencyManagement>
 
     <modules>
-        <module>game-server</module>
+        <module>server</module>
+        <module>player</module>
     </modules>
 
     <build>

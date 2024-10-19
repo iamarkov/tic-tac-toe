@@ -5,5 +5,7 @@
 .idea/**/shelf
 /.idea/
 /target/
-/game-server/target/
-/game-server/.mvn/
+/server/target/
+/server/.mvn/
+/player/target/
+/player/.mvn/

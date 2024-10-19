@@ -9,9 +9,9 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>game-server</artifactId>
+	<artifactId>player</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<description>Tic Tac Toe game server</description>
+	<description>Tic Tac Toe player</description>
 
 	<dependencies>
 		<dependency>

@@ -1,6 +1,6 @@
-package com.scentbird.gameserver.payload.requests;
+package com.scentbird.server.payload.requests;
 
-import com.scentbird.gameserver.stomp.StompDestinations;
+import com.scentbird.server.stomp.StompDestinations;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;

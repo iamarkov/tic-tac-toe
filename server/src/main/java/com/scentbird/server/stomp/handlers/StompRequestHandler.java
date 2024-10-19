@@ -1,6 +1,6 @@
-package com.scentbird.gameserver.stomp.handlers;
+package com.scentbird.server.stomp.handlers;
 
-import com.scentbird.gameserver.payload.requests.StompRequest;
+import com.scentbird.server.payload.requests.StompRequest;
 
 public interface StompRequestHandler <R extends StompRequest> {
 
