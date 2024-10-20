@@ -1,4 +1,4 @@
-package com.scentbird.server.payload.requests;
+package com.scentbird.common.payload.requests;
 
 import lombok.Data;
 

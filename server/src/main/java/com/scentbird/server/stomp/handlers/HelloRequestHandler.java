@@ -1,7 +1,7 @@
 package com.scentbird.server.stomp.handlers;
 
-import com.scentbird.server.payload.requests.HelloRequest;
-import com.scentbird.server.stomp.StompDestinations;
+import com.scentbird.common.payload.requests.HelloRequest;
+import com.scentbird.common.stomp.StompDestinations;
 import org.springframework.stereotype.Component;
 
 @Component

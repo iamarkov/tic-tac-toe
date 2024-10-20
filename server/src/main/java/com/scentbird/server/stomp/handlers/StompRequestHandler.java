@@ -1,6 +1,7 @@
 package com.scentbird.server.stomp.handlers;
 
-import com.scentbird.server.payload.requests.StompRequest;
+
+import com.scentbird.common.payload.requests.StompRequest;
 
 public interface StompRequestHandler <R extends StompRequest> {
 
