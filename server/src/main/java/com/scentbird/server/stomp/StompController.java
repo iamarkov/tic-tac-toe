@@ -1,7 +1,8 @@
 package com.scentbird.server.stomp;
 
-import com.scentbird.server.payload.requests.HelloRequest;
-import com.scentbird.server.payload.requests.StompRequest;
+import com.scentbird.common.payload.requests.HelloRequest;
+import com.scentbird.common.payload.requests.StompRequest;
+import com.scentbird.common.stomp.StompDestinations;
 import com.scentbird.server.stomp.handlers.StompRequestHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.Header;
@@ -15,11 +16,11 @@ import java.util.Optional;
 
 @Controller
 @Slf4j
-public class TicTacToeStompController {
+public class StompController {
 
     private final Map<String, StompRequestHandler<?>> requestHandlerMap;
 
-    public TicTacToeStompController(List<StompRequestHandler<?>> requestHandlers) {
+    public StompController(List<StompRequestHandler<?>> requestHandlers) {
         requestHandlerMap = new HashMap<>();
         for (StompRequestHandler<?> requestHandler : requestHandlers) {
             requestHandlerMap.put(requestHandler.getSupportedDestination(), requestHandler);
