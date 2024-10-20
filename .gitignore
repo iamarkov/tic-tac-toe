@@ -9,3 +9,5 @@
 /server/.mvn/
 /player/target/
 /player/.mvn/
+/common-components/target/
+/common-components/.mvn/
