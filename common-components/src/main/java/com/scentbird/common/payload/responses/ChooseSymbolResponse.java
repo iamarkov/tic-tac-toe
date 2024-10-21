@@ -8,6 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
+@ToString
 public class ChooseSymbolResponse extends StompResponse {
 
     public String roomId;

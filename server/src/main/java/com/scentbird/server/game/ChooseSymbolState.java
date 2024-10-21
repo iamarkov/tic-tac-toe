@@ -30,8 +30,10 @@ class ChooseSymbolState extends TicTacToeState {
         TicTacToeSymbol leftSymbol = chosenSymbol.equals(TicTacToeSymbol.X) ? TicTacToeSymbol.O : TicTacToeSymbol.X;
         for (Player player : gameRoom.getPlayers().values()) {
             if (player.getUsername().equals(username)) {
+                log.info("User {} chose to play with symbol {}", player.getUsername(), chosenSymbol);
                 player.setSymbol(chosenSymbol);
             } else {
+                log.info("For user {} the symbol {} is left", player.getUsername(), leftSymbol);
                 player.setSymbol(leftSymbol);
             }
         }

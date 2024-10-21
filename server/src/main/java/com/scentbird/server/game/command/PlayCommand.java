@@ -7,7 +7,7 @@ import lombok.experimental.SuperBuilder;
 
 @SuperBuilder
 @Getter
-@ToString
+@ToString(callSuper = true)
 public class PlayCommand extends GameCommand {
 
     private final TicTacToeRoom gameRoom;

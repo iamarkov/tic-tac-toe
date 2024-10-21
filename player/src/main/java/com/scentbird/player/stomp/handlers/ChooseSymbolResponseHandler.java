@@ -5,6 +5,7 @@ import com.scentbird.common.payload.responses.ChooseSymbolResponse;
 import com.scentbird.player.command.ChooseSymbolCommand;
 import com.scentbird.player.command.PlayerCommand;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Type;
@@ -17,6 +18,9 @@ import static com.scentbird.common.stomp.StompDestinations.CHOOSE_SYMBOL;
 @Component
 @RequiredArgsConstructor
 public class ChooseSymbolResponseHandler implements StompResponseHandler<ChooseSymbolResponse> {
+
+    @Value("${player.username}")
+    private String playerUsername;
 
     @Override
     public String getSupportedDestination() {
@@ -32,6 +36,7 @@ public class ChooseSymbolResponseHandler implements StompResponseHandler<ChooseS
     public PlayerCommand convert(ChooseSymbolResponse response) {
         TicTacToeSymbol randomSymbol = TicTacToeSymbol.values()[new Random().nextInt(TicTacToeSymbol.values().length)];
         return ChooseSymbolCommand.builder()
+                .username(playerUsername)
                 .symbol(randomSymbol)
                 .roomId(response.getRoomId())
                 .build();

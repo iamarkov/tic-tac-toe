@@ -8,7 +8,7 @@ import lombok.experimental.SuperBuilder;
 
 @SuperBuilder
 @Getter
-@ToString
+@ToString(callSuper = true)
 public class JoinGameCommand extends GameCommand {
 
     private final LobbyService lobbyService;

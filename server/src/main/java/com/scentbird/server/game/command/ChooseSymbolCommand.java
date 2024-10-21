@@ -10,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @SuperBuilder
 @Getter
-@ToString
+@ToString(callSuper = true)
 @Slf4j
 public class ChooseSymbolCommand extends GameCommand {
 
