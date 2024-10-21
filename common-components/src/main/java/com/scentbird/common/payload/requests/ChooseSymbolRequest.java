@@ -1,5 +1,6 @@
 package com.scentbird.common.payload.requests;
 
+import com.scentbird.common.payload.TicTacToeSymbol;
 import com.scentbird.common.stomp.StompDestinations;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -9,13 +10,14 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder
 @ToString(callSuper = true)
-public class HelloRequest extends StompRequest {
+public class ChooseSymbolRequest extends StompRequest {
 
-    private String name;
+    private TicTacToeSymbol symbol;
+    private String roomId;
 
     @Override
     public String getDestination() {
-        return StompDestinations.HELLO;
+        return StompDestinations.CHOOSE_SYMBOL;
     }
 
 }

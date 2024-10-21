@@ -9,13 +9,15 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder
 @ToString(callSuper = true)
-public class HelloRequest extends StompRequest {
+public class PlayRequest extends StompRequest {
 
-    private String name;
+    private String roomId;
+    private int xCoordinate;
+    private int yCoordinate;
 
     @Override
     public String getDestination() {
-        return StompDestinations.HELLO;
+        return StompDestinations.PLAY;
     }
 
 }

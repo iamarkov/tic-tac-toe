@@ -1,20 +1,17 @@
 package com.scentbird.common.payload.requests;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Data
+@NoArgsConstructor
+@SuperBuilder
 public abstract class StompRequest {
 
-    private final String destination;
     private String username;
 
-    public StompRequest(String destination) {
-        this.destination = destination;
-    }
-
-    public final String getDestination() {
-        return destination;
-    }
+    public abstract String getDestination();
 
     public final String getUsername() {
         return username;

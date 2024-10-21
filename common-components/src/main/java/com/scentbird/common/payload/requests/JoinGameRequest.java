@@ -9,13 +9,11 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder
 @ToString(callSuper = true)
-public class HelloRequest extends StompRequest {
-
-    private String name;
+public class JoinGameRequest extends StompRequest {
 
     @Override
     public String getDestination() {
-        return StompDestinations.HELLO;
+        return StompDestinations.JOIN_GAME;
     }
 
 }
