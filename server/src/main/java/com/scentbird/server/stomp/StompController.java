@@ -2,6 +2,7 @@ package com.scentbird.server.stomp;
 
 import com.scentbird.common.payload.requests.ChooseSymbolRequest;
 import com.scentbird.common.payload.requests.JoinGameRequest;
+import com.scentbird.common.payload.requests.PlayRequest;
 import com.scentbird.common.payload.requests.StompRequest;
 import com.scentbird.common.stomp.StompDestinations;
 import com.scentbird.server.game.command.GameCommand;
@@ -37,6 +38,11 @@ public class StompController {
     @MessageMapping(StompDestinations.CHOOSE_SYMBOL)
     public void receiveChooseSymbolRequest(ChooseSymbolRequest chooseSymbolRequest, @Header("simpSessionId") String sessionId) {
         receive(chooseSymbolRequest, sessionId);
+    }
+
+    @MessageMapping(StompDestinations.PLAY)
+    public void receivePlayRequest(PlayRequest playRequest, @Header("simpSessionId") String sessionId) {
+        receive(playRequest, sessionId);
     }
 
     private <R extends StompRequest> void receive(R request, String sessionId) {

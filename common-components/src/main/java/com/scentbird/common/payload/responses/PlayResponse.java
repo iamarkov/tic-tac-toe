@@ -1,19 +1,19 @@
-package com.scentbird.common.payload.requests;
+package com.scentbird.common.payload.responses;
 
+import com.scentbird.common.payload.TicTacToeSymbol;
 import com.scentbird.common.stomp.StompDestinations;
 import lombok.*;
-import lombok.experimental.SuperBuilder;
 
+@NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Builder
 @Getter
 @EqualsAndHashCode(callSuper = true)
-@NoArgsConstructor
-@SuperBuilder
 @ToString(callSuper = true)
-public class PlayRequest extends StompRequest {
+public class PlayResponse extends StompResponse {
 
     private String roomId;
-    private int rowIndex;
-    private int columnIndex;
+    private TicTacToeSymbol[][] gameField;
 
     @Override
     public String getDestination() {

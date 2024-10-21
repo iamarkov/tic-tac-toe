@@ -9,6 +9,6 @@ public final class StompDestinations {
 
     public static final String HELLO = "/hello";
     public static final String JOIN_GAME = "/join-game";
-    public static final String PLAY = "/game/play";
+    public static final String PLAY = "/play";
     public static final String CHOOSE_SYMBOL = "/choose-symbol";
 }

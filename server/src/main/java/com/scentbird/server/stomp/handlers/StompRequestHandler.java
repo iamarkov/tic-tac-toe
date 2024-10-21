@@ -8,6 +8,6 @@ public interface StompRequestHandler <R extends StompRequest> {
 
     String getSupportedDestination();
 
+    //this way we provide loose coupling between requests from players and commands to be used internally
     GameCommand convert(R request, String sessionId);
-
 }

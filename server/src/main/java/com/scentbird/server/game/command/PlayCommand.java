@@ -1,23 +1,26 @@
 package com.scentbird.server.game.command;
 
-import com.scentbird.server.game.TicTacToeRoom;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 @SuperBuilder
 @Getter
 @ToString(callSuper = true)
+@Slf4j
 public class PlayCommand extends GameCommand {
 
-    private final TicTacToeRoom gameRoom;
-    private final String roomId;
-    private final int xCoordinate;
-    private final int yCoordinate;
+    private final int rowIndex;
+    private final int columnIndex;
 
     @Override
     public void execute() {
-        //TODO implement
+        if (gameRoom == null) {
+            log.error(ROOM_NULL_ERROR_MESSAGE);
+            return;
+        }
+        gameRoom.play(this);
     }
 
 }

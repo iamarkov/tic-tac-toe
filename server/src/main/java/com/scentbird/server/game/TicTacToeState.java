@@ -33,4 +33,8 @@ abstract class TicTacToeState implements TicTacToeGame {
         return false;
     }
 
+    void markStateReady() {
+        log.info("State {} ready!", getClass().getSimpleName());
+    }
+
 }

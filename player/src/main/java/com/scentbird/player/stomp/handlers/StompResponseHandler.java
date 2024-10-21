@@ -11,5 +11,6 @@ public interface StompResponseHandler<R extends StompResponse> {
 
     Type getSupportedType();
 
+    //this way we provide loose coupling between responses from the server and commands to be used internally
     PlayerCommand convert(R response);
 }

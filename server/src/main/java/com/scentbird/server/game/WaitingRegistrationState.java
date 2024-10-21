@@ -28,7 +28,7 @@ class WaitingRegistrationState extends TicTacToeState {
         gameRoom.getPlayers().put(username, new Player(username, joinGameCommand.getSessionId()));
 
         if (gameRoom.getPlayers().size() == TIC_TAC_TOE_PLAYERS_COUNT) {
-            gameRoom.transit(new ChooseSymbolState(gameRoom));
+            gameRoom.transit(ChooseSymbolState::new);
         }
 
         return true;
