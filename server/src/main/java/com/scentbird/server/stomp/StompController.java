@@ -1,8 +1,10 @@
 package com.scentbird.server.stomp;
 
-import com.scentbird.common.payload.requests.HelloRequest;
+import com.scentbird.common.payload.requests.ChooseSymbolRequest;
+import com.scentbird.common.payload.requests.JoinGameRequest;
 import com.scentbird.common.payload.requests.StompRequest;
 import com.scentbird.common.stomp.StompDestinations;
+import com.scentbird.server.game.command.GameCommand;
 import com.scentbird.server.stomp.handlers.StompRequestHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.Header;
@@ -27,16 +29,22 @@ public class StompController {
         }
     }
 
-    @MessageMapping(StompDestinations.HELLO)
-    public void receiveHelloRequest(HelloRequest helloRequest, @Header("simpSessionId") String sessionId) {
-        receive(helloRequest, sessionId);
+    @MessageMapping(StompDestinations.JOIN_GAME)
+    public void receiveJoinGameRequest(JoinGameRequest joinGameRequest, @Header("simpSessionId") String sessionId) {
+        receive(joinGameRequest, sessionId);
+    }
+
+    @MessageMapping(StompDestinations.CHOOSE_SYMBOL)
+    public void receiveChooseSymbolRequest(ChooseSymbolRequest chooseSymbolRequest, @Header("simpSessionId") String sessionId) {
+        receive(chooseSymbolRequest, sessionId);
     }
 
     private <R extends StompRequest> void receive(R request, String sessionId) {
         log.info("Received STOMP message from {} with sessionId: {}: {}", request.getUsername(), sessionId, request);
         Optional<StompRequestHandler> optionalHandler = Optional.ofNullable(requestHandlerMap.get(request.getDestination()));
         if (optionalHandler.isPresent()) {
-            optionalHandler.get().handle(request);
+            GameCommand gameCommand = optionalHandler.get().convert(request, sessionId);
+            gameCommand.execute();
         } else {
             log.error("Unrecognized STOMP destination {}, ignoring message: {}", request.getDestination(), request);
         }
