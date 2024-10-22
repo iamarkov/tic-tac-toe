@@ -1,5 +1,6 @@
 package com.scentbird.common.loadbalancing;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.stereotype.Service;
 
@@ -7,6 +8,7 @@ import java.util.List;
 import java.util.Random;
 
 @Service
+@Slf4j
 public class RandomServerLoadBalancer implements GameServerLoadBalancer {
 
     @Override
