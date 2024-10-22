@@ -12,6 +12,7 @@ import java.util.Random;
 @Builder
 @ToString
 @Slf4j
+@Getter
 public class PlayCommand extends PlayerCommand {
 
     private final String username;

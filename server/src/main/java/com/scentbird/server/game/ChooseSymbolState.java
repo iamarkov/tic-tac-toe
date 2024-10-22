@@ -42,7 +42,7 @@ class ChooseSymbolState extends TicTacToeState {
         //we send the option to choose a symbol to both players and accept the request of the faster one to respond to it
         for (Player player : gameRoom.getPlayers().values()) {
             ChooseSymbolResponse response = ChooseSymbolResponse.builder().roomId(gameRoom.getRoomId()).build();
-            gameRoom.getStompMessageSender().sendToUser(player.getSessionId(), response);
+            gameRoom.getStompMessageSender().sendToUser(player.getUsername(), response);
         }
     }
 }

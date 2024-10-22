@@ -24,7 +24,7 @@ public class PlayRequestHandler implements StompRequestHandler<PlayRequest> {
         return PlayCommand.builder()
                 .username(request.getUsername())
                 .sessionId(sessionId)
-                .gameRoom(lobbyService.getRoom(request.getRoomId()))
+                .gameRoom(lobbyService.getGameRooms().get(request.getRoomId()))
                 .rowIndex(request.getRowIndex())
                 .columnIndex(request.getColumnIndex())
                 .build();

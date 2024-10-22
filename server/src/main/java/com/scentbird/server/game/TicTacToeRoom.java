@@ -4,7 +4,9 @@ import com.scentbird.common.payload.TicTacToeSymbol;
 import com.scentbird.server.game.command.ChooseSymbolCommand;
 import com.scentbird.server.game.command.JoinGameCommand;
 import com.scentbird.server.game.command.PlayCommand;
+import com.scentbird.server.lobby.LobbyService;
 import com.scentbird.server.stomp.StompMessageSender;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,16 +27,22 @@ public class TicTacToeRoom implements TicTacToeGame {
     private TicTacToeState roomState;
     @Getter
     private final StompMessageSender stompMessageSender;
+    @Getter(AccessLevel.PROTECTED)
+    private final LobbyService lobbyService;
     private final TicTacToeSymbol[][] gameField;
     @Getter
     private Player winner;
 
-    public TicTacToeRoom(StompMessageSender stompMessageSender) {
+    private volatile Player currentPlayer;
+    private volatile Player nextPlayer;
+
+    public TicTacToeRoom(StompMessageSender stompMessageSender, LobbyService lobbyService) {
         this.roomLock = new ReentrantReadWriteLock();
         this.roomCounter = new AtomicInteger();
         this.roomId = generateRoomId();
         this.players = new HashMap<>();
         this.stompMessageSender = stompMessageSender;
+        this.lobbyService = lobbyService;
         this.roomState = new WaitingRegistrationState(this);
         this.gameField = new TicTacToeSymbol[3][3];
     }
@@ -94,6 +102,38 @@ public class TicTacToeRoom implements TicTacToeGame {
         }
     }
 
+    public String getStateName() {
+        return roomState.getClass().getSimpleName().replace("State", "");
+    }
+
+    public Player getCurrentPlayer() {
+        try {
+            roomLock.readLock().lock();
+            return currentPlayer;
+        } finally {
+            roomLock.readLock().unlock();
+        }
+    }
+
+    public Player getNextPlayer() {
+        try {
+            roomLock.readLock().lock();
+            return nextPlayer;
+        } finally {
+            roomLock.readLock().unlock();
+        }
+    }
+
+    public void assignPlayerOrder(Player currentPlayer, Player nextPlayer) {
+        try {
+            roomLock.writeLock().lock();
+            this.currentPlayer = currentPlayer;
+            this.nextPlayer = nextPlayer;
+        } finally {
+            roomLock.writeLock().unlock();
+        }
+    }
+
     void markOnField(TicTacToeSymbol symbol, int rowIndex, int columnIndex) {
         gameField[rowIndex][columnIndex] = symbol;
     }
@@ -130,7 +170,7 @@ public class TicTacToeRoom implements TicTacToeGame {
     }
 
     void markWinner(Player player) {
-        if (winner != null || !players.containsKey(player.getUsername())) {
+        if (winner != null || !getPlayers().containsKey(player.getUsername())) {
             log.error("Winner not valid!");
             return;
         }

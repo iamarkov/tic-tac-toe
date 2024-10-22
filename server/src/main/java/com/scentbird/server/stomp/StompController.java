@@ -1,9 +1,6 @@
 package com.scentbird.server.stomp;
 
-import com.scentbird.common.payload.requests.ChooseSymbolRequest;
-import com.scentbird.common.payload.requests.JoinGameRequest;
-import com.scentbird.common.payload.requests.PlayRequest;
-import com.scentbird.common.payload.requests.StompRequest;
+import com.scentbird.common.payload.requests.*;
 import com.scentbird.common.stomp.StompDestinations;
 import com.scentbird.server.game.command.GameCommand;
 import com.scentbird.server.stomp.handlers.StompRequestHandler;

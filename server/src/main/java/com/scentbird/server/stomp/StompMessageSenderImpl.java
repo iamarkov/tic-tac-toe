@@ -1,6 +1,7 @@
 package com.scentbird.server.stomp;
 
 import com.scentbird.common.payload.responses.StompResponse;
+import com.scentbird.server.lobby.UserRegistry;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
@@ -17,6 +18,7 @@ import static com.scentbird.common.stomp.StompDestinations.TOPIC_PREFIX;
 public class StompMessageSenderImpl implements StompMessageSender {
 
     private final SimpMessagingTemplate messagingTemplate;
+    private final UserRegistry userRegistry;
 
     @Override
     public void sendToAll(StompResponse response) {
@@ -26,7 +28,8 @@ public class StompMessageSenderImpl implements StompMessageSender {
     }
 
     @Override
-    public void sendToUser(String sessionId, StompResponse response) {
+    public void sendToUser(String username, StompResponse response) {
+        String sessionId = userRegistry.getOnlinePlayer(username).getSessionId();
         SimpMessageHeaderAccessor headerAccessor = SimpMessageHeaderAccessor
                 .create(SimpMessageType.MESSAGE);
         headerAccessor.setSessionId(sessionId);

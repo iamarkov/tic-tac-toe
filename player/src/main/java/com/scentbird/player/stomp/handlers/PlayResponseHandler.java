@@ -32,7 +32,7 @@ public class PlayResponseHandler implements StompResponseHandler<PlayResponse> {
     }
 
     @Override
-    public PlayerCommand convert(PlayResponse response) {
+    public PlayCommand convert(PlayResponse response) {
         return PlayCommand.builder()
                 .username(playerUsername)
                 .roomId(response.getRoomId())

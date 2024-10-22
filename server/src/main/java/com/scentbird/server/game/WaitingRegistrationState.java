@@ -15,6 +15,22 @@ class WaitingRegistrationState extends TicTacToeState {
 
     @Override
     public boolean registerPlayer(JoinGameCommand joinGameCommand) {
+        if (!validateCommand(joinGameCommand)) {
+            return false;
+        }
+
+        String username = joinGameCommand.getUsername();
+        gameRoom.getPlayers().put(username, joinGameCommand.getPlayer());
+        joinGameCommand.getLobbyService().addActiveRoom(username, gameRoom.getRoomId());
+
+        if (gameRoom.getPlayers().size() == TIC_TAC_TOE_PLAYERS_COUNT) {
+            gameRoom.transit(ChooseSymbolState::new);
+        }
+
+        return true;
+    }
+
+    private boolean validateCommand(JoinGameCommand joinGameCommand) {
         if (gameRoom.getPlayers().size() == TIC_TAC_TOE_PLAYERS_COUNT) {
             log.warn("Room {} already full!", gameRoom.getRoomId());
             return false;
@@ -23,12 +39,6 @@ class WaitingRegistrationState extends TicTacToeState {
         if (gameRoom.getPlayers().containsKey(username)) {
             log.warn("Player {} already entered room {}!", username, gameRoom.getRoomId());
             return false;
-        }
-
-        gameRoom.getPlayers().put(username, new Player(username, joinGameCommand.getSessionId()));
-
-        if (gameRoom.getPlayers().size() == TIC_TAC_TOE_PLAYERS_COUNT) {
-            gameRoom.transit(ChooseSymbolState::new);
         }
 
         return true;

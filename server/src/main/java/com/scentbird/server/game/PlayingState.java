@@ -9,9 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 class PlayingState extends TicTacToeState {
 
     private static final int MAX_TRIES = 9;
-
-    private Player currentPlayer;
-    private Player nextPlayer;
     private int numberOfTries;
 
     PlayingState(TicTacToeRoom gameRoom) {
@@ -21,12 +18,12 @@ class PlayingState extends TicTacToeState {
     @Override
     public boolean play(PlayCommand playCommand) {
         if (!validateCommand(playCommand)) {
-            sendPlayResponseToCurrentPlayer();
             return false;
         }
 
         int rowIndex = playCommand.getRowIndex();
         int columnIndex = playCommand.getColumnIndex();
+        Player currentPlayer = gameRoom.getCurrentPlayer();
         TicTacToeSymbol symbol = currentPlayer.getSymbol();
         gameRoom.markOnField(symbol, rowIndex, columnIndex);
         log.info("Player {} marked {} on cell with indexes [{}][{}]",
@@ -44,9 +41,10 @@ class PlayingState extends TicTacToeState {
             return true;
         }
 
-        Player temp = currentPlayer;
-        currentPlayer = nextPlayer;
-        nextPlayer = temp;
+        Player nextPlayer = currentPlayer;
+        currentPlayer = gameRoom.getNextPlayer();
+        gameRoom.assignPlayerOrder(currentPlayer, nextPlayer);
+
         sendPlayResponseToCurrentPlayer();
 
         return true;
@@ -55,14 +53,17 @@ class PlayingState extends TicTacToeState {
     @Override
     void markStateReady() {
         //first to play is the user with X symbol
+        Player currentPlayer = null;
+        Player nextPlayer = null;
         for (Player player : gameRoom.getPlayers().values()) {
             if (player.getSymbol().equals(TicTacToeSymbol.X)) {
                 currentPlayer = player;
-                sendPlayResponseToCurrentPlayer();
             } else {
                 nextPlayer = player;
             }
         }
+        gameRoom.assignPlayerOrder(currentPlayer, nextPlayer);
+        sendPlayResponseToCurrentPlayer();
     }
 
     private void sendPlayResponseToCurrentPlayer() {
@@ -70,12 +71,12 @@ class PlayingState extends TicTacToeState {
                 .roomId(gameRoom.getRoomId())
                 .gameField(gameRoom.getGameField())
                 .build();
-        gameRoom.getStompMessageSender().sendToUser(currentPlayer.getSessionId(), playResponse);
+        gameRoom.getStompMessageSender().sendToUser(gameRoom.getCurrentPlayer().getUsername(), playResponse);
     }
 
     private boolean validateCommand(PlayCommand playCommand) {
         String username = playCommand.getUsername();
-        if (username == null || !username.equals(currentPlayer.getUsername())) {
+        if (username == null || !username.equals(gameRoom.getCurrentPlayer().getUsername())) {
             log.error("Can't execute play command: wrong username!");
             return false;
         }

@@ -24,7 +24,7 @@ public class ChooseSymbolRequestHandler implements StompRequestHandler<ChooseSym
         return ChooseSymbolCommand.builder()
                 .username(request.getUsername())
                 .sessionId(sessionId)
-                .gameRoom(lobbyService.getRoom(request.getRoomId()))
+                .gameRoom(lobbyService.getGameRooms().get(request.getRoomId()))
                 .symbol(request.getSymbol())
                 .build();
     }

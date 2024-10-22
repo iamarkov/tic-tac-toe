@@ -11,6 +11,9 @@ class EndState extends TicTacToeState {
 
     @Override
     void markStateReady() {
+        gameRoom.getPlayers().values().forEach(player -> {
+            gameRoom.getLobbyService().removeActiveRoom(player.getUsername(), gameRoom.getRoomId());
+        });
         if (gameRoom.hasWinner()) {
             log.info("Congratulations to player {}!", gameRoom.getWinner().getUsername());
         } else {

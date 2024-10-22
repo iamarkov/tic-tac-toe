@@ -33,7 +33,7 @@ public class ChooseSymbolResponseHandler implements StompResponseHandler<ChooseS
     }
 
     @Override
-    public PlayerCommand convert(ChooseSymbolResponse response) {
+    public ChooseSymbolCommand convert(ChooseSymbolResponse response) {
         TicTacToeSymbol randomSymbol = TicTacToeSymbol.values()[new Random().nextInt(TicTacToeSymbol.values().length)];
         return ChooseSymbolCommand.builder()
                 .username(playerUsername)

@@ -11,4 +11,5 @@ public final class StompDestinations {
     public static final String JOIN_GAME = "/join-game";
     public static final String PLAY = "/play";
     public static final String CHOOSE_SYMBOL = "/choose-symbol";
+    public static final String STATE = "/state";
 }
